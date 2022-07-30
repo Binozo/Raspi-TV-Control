@@ -1,7 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"Raspi-TV-Control/pkg/handler/apihandler"
+	"Raspi-TV-Control/pkg/system"
+)
 
 func main() {
-	fmt.Println("Hello, world!")
+	system.Init()
+	apihandler.RegisterRoutes()
 }
