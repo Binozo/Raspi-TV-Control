@@ -17,7 +17,7 @@ func RegisterRoutes() *mux.Router {
 	r.HandleFunc("/powerstatus", PowerStatusHandler).Methods("GET")
 	r.HandleFunc("/powerstatus/{status}", SetPowerStatusHandler).Methods("POST")
 	r.HandleFunc("/volume/{volume}", VolumeHandler).Methods("POST")
-	r.HandleFunc("/key/{key}", VolumeHandler).Methods("POST")
+	r.HandleFunc("/key/{key}", SendKeyHandler).Methods("POST")
 	return r
 }
 
