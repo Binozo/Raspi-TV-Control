@@ -17,6 +17,7 @@ func RegisterRoutes() *mux.Router {
 	r.HandleFunc("/powerstatus", PowerStatusHandler).Methods("GET")
 	r.HandleFunc("/powerstatus/{status}", SetPowerStatusHandler).Methods("POST")
 	r.HandleFunc("/volume/{volume}", VolumeHandler).Methods("POST")
+	r.HandleFunc("/key/{key}", VolumeHandler).Methods("POST")
 	return r
 }
 
@@ -80,6 +81,20 @@ func VolumeHandler(w http.ResponseWriter, r *http.Request) {
 	} else if targetVolume == volume.VOLUME_MUTE {
 		err = cechandler.Mute()
 	}
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		data, _ := json.Marshal(map[string]string{"status": "error", "error": err.Error()})
+		w.Write(data)
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+	data, _ := json.Marshal(map[string]string{"status": "ok"})
+	w.Write(data)
+}
+
+func SendKeyHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	err := cechandler.SendKey(vars["key"])
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		data, _ := json.Marshal(map[string]string{"status": "error", "error": err.Error()})

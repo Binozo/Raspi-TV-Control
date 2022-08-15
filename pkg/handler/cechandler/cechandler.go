@@ -2,7 +2,9 @@ package cechandler
 
 import (
 	"Raspi-TV-Control/pkg/constants/enums/powerstatus"
+	"errors"
 	"github.com/chbmuc/cec"
+	"time"
 )
 
 var (
@@ -49,4 +51,18 @@ func VolumeDown() error {
 
 func Mute() error {
 	return con.Mute()
+}
+
+func SendKey(keyName string) error {
+	key := cec.GetKeyCodeByName(keyName)
+	if key == -1 {
+		return errors.New("invalid key name")
+	}
+	err := con.KeyPress(address, key)
+	if err != nil {
+		return err
+	}
+	time.Sleep(time.Millisecond * 10)
+	err = con.KeyRelease(address)
+	return err
 }
