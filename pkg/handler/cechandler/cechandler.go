@@ -38,3 +38,15 @@ func SetPowerStatus(status string) error {
 	}
 	return nil
 }
+
+func VolumeUp() error {
+	return con.VolumeUp()
+}
+
+func VolumeDown() error {
+	return con.VolumeDown()
+}
+
+func Mute() error {
+	return con.Mute()
+}
