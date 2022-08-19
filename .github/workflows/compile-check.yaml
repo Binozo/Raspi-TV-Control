@@ -7,9 +7,20 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v3
       - uses: actions/setup-go@v3
-      - name: Setup dependencies
+      - name: Setup p8-platform
         run: |
-          sudo apt-get install p8-platform
+          sudo apt-get update
+          sudo apt-get install cmake build-essential
+          git clone https://github.com/Pulse-Eight/platform.git
+          mkdir platform/build
+          cd platform/build
+          cmake ..
+          make -j4
+          sudo make install
+          sudo ldconfig
+
+      - name: Setup libcec
+        run: |
           sudo apt-get install libcec-dev
       - name: Check if it compiles
         run: |
