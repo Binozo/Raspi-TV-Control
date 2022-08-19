@@ -9,6 +9,7 @@ jobs:
       - uses: actions/setup-go@v3
       - name: Setup dependencies
         run: |
+          sudo apt-get install p8-platform
           sudo apt-get install libcec-dev
       - name: Check if it compiles
         run: |
