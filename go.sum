@@ -1,4 +1,4 @@
-github.com/chbmuc/cec v0.0.0-20170405204755-573ad0b0369b h1:J+8dFfZ3Ja3zlGvfv9G4IDBdiAXNWzkom41wK6l2QnE=
-github.com/chbmuc/cec v0.0.0-20170405204755-573ad0b0369b/go.mod h1:QHV/17/YYFcQvvQpJK9BiuLmjjfxIREN9JZC6SIzp0g=
+github.com/Binozo/cec.go v0.0.0-20220819132952-8db3cd791577 h1:KwhbPoAU2UjA8+CgJvTDTOr06yHG29AmhfsEXD68AC4=
+github.com/Binozo/cec.go v0.0.0-20220819132952-8db3cd791577/go.mod h1:UWxPKWvPCOBUEuoZxYcrHg8CHk+spOUBTv8r5Tv+sF0=
 github.com/gorilla/mux v1.8.0 h1:i40aqfkR1h2SlN9hojwV5ZA91wcXFOvkdNIeFDP5koI=
 github.com/gorilla/mux v1.8.0/go.mod h1:DVbg23sWSpFRCP0SfiEN6jmj59UnW/n46BH5rLB71So=

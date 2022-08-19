@@ -3,17 +3,19 @@ package cechandler
 import (
 	"Raspi-TV-Control/pkg/constants/enums/powerstatus"
 	"errors"
-	"github.com/chbmuc/cec"
+	"github.com/Binozo/cec.go"
 	"time"
 )
 
 var (
-	con     *cec.Connection
-	address int = 0
+	con           *cec.Connection
+	address       int = 0
+	tvIsConnected     = false
+	maxRetries        = 10
 )
 
 func Init() error {
-	connection, err := cec.Open("", "cec.go")
+	connection, err := cec.Open("", "cec.go", false)
 	if err != nil {
 		return err
 	}
