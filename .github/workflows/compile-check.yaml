@@ -21,8 +21,8 @@ jobs:
 
       - name: Setup libcec
         run: |
-          sudo apt-get install libudev-dev
-          sudo apt-get install libcec-dev
+          sudo apt-cache policy libcec-dev
+          sudo apt-get install libudev-dev libcec-dev
       - name: Check if it compiles
         run: |
           cd cmd
