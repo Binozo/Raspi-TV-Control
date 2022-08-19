@@ -9,7 +9,7 @@ jobs:
       - uses: actions/setup-go@v3
       - name: Setup dependencies
         run: |
-          apt-get install libcec-dev
+          sudo apt-get install libcec-dev
       - name: Check if it compiles
         run: |
           cd cmd
