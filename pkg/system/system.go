@@ -2,6 +2,7 @@ package system
 
 import (
 	"Raspi-TV-Control/pkg/constants"
+	"Raspi-TV-Control/pkg/handler/cechandler"
 	"fmt"
 	"runtime"
 	"time"
@@ -28,10 +29,17 @@ func GetUptime() time.Duration {
 }
 
 func GetInfo() map[string]string {
+	note := "Target TV has been detected"
+	if !cechandler.CheckIfTVIsConnectedAndSetup() {
+		note = "Couldn't detect any TV"
+	}
+	libInfo := cechandler.GetLibInfo()
 	return map[string]string{
 		"OS":          runtime.GOOS,
 		"Version":     constants.VERSION,
 		"Uptime_Date": GetFormattedUptimeDate(),
 		"Uptime":      fmt.Sprintf("%f", GetUptime().Seconds()),
+		"Note":        note,
+		"LibInfo":     libInfo,
 	}
 }
