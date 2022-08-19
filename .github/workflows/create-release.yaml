@@ -1,0 +1,78 @@
+name: Create release
+on: [workflow_dispatch]
+jobs:
+  Create-Release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - uses: actions/setup-go@v3
+      - name: Check if it compiles
+        run: |
+          cd cmd
+          go build -o main
+
+      - name: Build Linux amd64
+        run: |
+          cd cmd
+          env GOOS=linux GOARCH=amd64 go build -o ../RaspiTVControl_amd64
+
+      - name: Build Raspi Linux arm
+        run: |
+          cd cmd
+          env GOOS=linux GOARCH=arm GOARM=5 go build -o ../RaspiTVControl_arm
+
+      - name: Build Linux arm64
+        run: |
+          cd cmd
+          env GOOS=linux GOARCH=arm64 go build -o ../RaspiTVControl_arm64
+
+      - name: version
+        run: echo "::set-output name=version::$(cd cmd && go run main.go -v)"
+        id: version
+          
+      - name: Make release
+        uses: actions/create-release@v1
+        id: create_release
+        with:
+          draft: false
+          prerelease: false
+          release_name: "v${{ steps.version.outputs.version }}"
+          tag_name: "v${{ steps.version.outputs.version }}"
+          #body_path: README.md
+          body: |
+            # v${{ steps.version.outputs.version }} Release
+            Executables can be downloaded below. For more information see the [README](https://github.com/Binozo/Raspi-TV-Control#Install).
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Upload amd64
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: RaspiTVControl_amd64
+          asset_name: RaspiTVControl_amd64
+          asset_content_type: application/gzip
+
+      - name: Upload Raspi arm
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: RaspiTVControl_arm
+          asset_name: RaspiTVControl_arm
+          asset_content_type: application/gzip
+
+      - name: Upload arm64
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: RaspiTVControl_arm64
+          asset_name: RaspiTVControl_arm64
+          asset_content_type: application/gzip
+        
