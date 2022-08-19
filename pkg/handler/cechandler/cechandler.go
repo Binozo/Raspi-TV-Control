@@ -23,7 +23,24 @@ func Init() error {
 	for _, device := range GetActiveDevices() {
 		address = device.LogicalAddress // setting a default address
 	}
+	CheckIfTVIsConnectedAndSetup()
 	return nil
+}
+
+// CheckIfTVIsConnectedAndSetup Checks if a TV is connected and sets the default address if so.
+func CheckIfTVIsConnectedAndSetup() bool {
+	for deviceType, device := range GetActiveDevices() {
+		if deviceType == "TV" && device.LogicalAddress == 0 {
+			address = device.LogicalAddress
+			tvIsConnected = true
+			return true
+		}
+	}
+	return false
+}
+
+func GetLibInfo() string {
+	return con.GetLibInfo()
 }
 
 func GetActiveDevices() map[string]cec.Device {
