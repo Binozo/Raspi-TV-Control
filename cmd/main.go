@@ -3,6 +3,7 @@ package main
 import (
 	"Raspi-TV-Control/pkg/constants"
 	"Raspi-TV-Control/pkg/handler/apihandler"
+	"Raspi-TV-Control/pkg/handler/arghandler"
 	"Raspi-TV-Control/pkg/handler/cechandler"
 	"Raspi-TV-Control/pkg/system"
 	"log"
@@ -11,6 +12,7 @@ import (
 )
 
 func main() {
+	arghandler.HandleArgs()
 	system.Init()
 	log.Println("Initializing CEC connection...")
 	err := cechandler.Init()
