@@ -48,7 +48,15 @@ func GetActiveDevices() map[string]cec.Device {
 }
 
 func GetPowerStatus() string {
-	return con.GetDevicePowerStatus(address)
+	for i := 0; i < maxRetries; i++ {
+		status := con.GetDevicePowerStatus(address)
+		if status == "" {
+			// sometimes we have to retry a few times until the status is available
+			continue
+		}
+		return status
+	}
+	return "unknown"
 }
 
 func SetPowerStatus(status string) error {
